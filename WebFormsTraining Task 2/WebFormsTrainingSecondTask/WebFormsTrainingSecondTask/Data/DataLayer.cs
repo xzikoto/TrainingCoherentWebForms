@@ -6,10 +6,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using WebFormsTrainingSecondTask.Data.Core;
 
 namespace WebFormsTrainingSecondTask.Data
 {
-    public class DataLayer
+    public class DataLayer : IDataLayer
     {
         private SqlConnection _connection;
         private SqlCommand _command;
@@ -22,7 +23,7 @@ namespace WebFormsTrainingSecondTask.Data
 
         }
 
-        private string ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
         public string GetMessage { get; set; }
 
         public string TaskCRUD(string query)
@@ -67,7 +68,7 @@ namespace WebFormsTrainingSecondTask.Data
             return GetMessage;
         }
 
-        public string FillgridView(string query, GridView dgv, string category)
+        public string FillGridView(string query, GridView dgv, string category)
         {
             var dt = new DataTable();
             try

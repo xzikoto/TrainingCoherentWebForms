@@ -29,15 +29,15 @@ namespace WebFormsTrainingSecondTask
                 switch (item.ToString())
                 {
                     case nameof(CategoryEnum.HIGH):
-                        _dataLayer.FillgridView(query, GridViewHigh, item.ToString());
+                        _dataLayer.FillGridView(query, GridViewHigh, item.ToString());
                         break;
                     
                     case nameof(CategoryEnum.MEDIUM):
-                        _dataLayer.FillgridView(query, GridViewMedium, item.ToString());
+                        _dataLayer.FillGridView(query, GridViewMedium, item.ToString());
                         break;
                     
                     case nameof(CategoryEnum.LOW):
-                        _dataLayer.FillgridView(query, GridViewMedium, item.ToString());
+                        _dataLayer.FillGridView(query, GridViewMedium, item.ToString());
                         break;
                 }
             }

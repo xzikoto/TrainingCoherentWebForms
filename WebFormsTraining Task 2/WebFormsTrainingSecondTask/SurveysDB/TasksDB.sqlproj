@@ -60,7 +60,7 @@
     <Folder Include="Tables scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables scripts\CreateTasksTable.sql" />
-    <Build Include="Database script\CreateTasksDatabase.sql" />
+    <None Include="Tables scripts\CreateTasksTable.sql" />
+    <None Include="Database script\CreateTasksDatabase.sql" />
   </ItemGroup>
 </Project>

@@ -105,6 +105,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DbScripts\Database script\CreateSurveysDatabase.sql" />
+    <Content Include="DbScripts\PopulateData scripts\PopulateOnlineExamsTable.sql" />
+    <Content Include="DbScripts\Tables scripts\CreateExamAnswersTable.sql" />
+    <Content Include="DbScripts\Tables scripts\CreateOnlineExamsTable.sql" />
+    <Content Include="DbScripts\Tables scripts\CreateQuestionStatisticsTable.sql" />
     <Content Include="Results.aspx" />
     <Content Include="Statistics.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
