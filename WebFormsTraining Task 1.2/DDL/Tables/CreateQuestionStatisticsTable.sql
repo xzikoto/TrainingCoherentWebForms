@@ -7,7 +7,7 @@ GO
 
 CREATE TABLE QuestionStatisticsTable 
 (
-	QuestionId int not null identity, 
+	QuestionId int not null , 
 	Question nvarchar(150) not null,
 	IsCorrect smallint not null,
 	Gender nvarchar(20) not null, CHECK(Gender LIKE 'MAN' OR Gender LIKE 'WOMAN')
