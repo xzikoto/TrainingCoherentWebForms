@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFormsTraining", "WebFormsTraining\WebFormsTraining.csproj", "{11C3F404-2C6F-4333-8D99-3D42D4AA344E}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SurveysDB", "SurveysDB\SurveysDB.sqlproj", "{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{11C3F404-2C6F-4333-8D99-3D42D4AA344E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C3F404-2C6F-4333-8D99-3D42D4AA344E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C3F404-2C6F-4333-8D99-3D42D4AA344E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{834EE16D-0B3E-4E54-8800-1BD78A3C1F2D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
