@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbScripts\Database script\CreateSurveysDatabase.sql" />
+    <Content Include="DbScripts\DeploymentScript.sql" />
     <Content Include="DbScripts\PopulateData scripts\PopulateOnlineExamsTable.sql" />
     <Content Include="DbScripts\Tables scripts\CreateExamAnswersTable.sql" />
     <Content Include="DbScripts\Tables scripts\CreateOnlineExamsTable.sql" />
