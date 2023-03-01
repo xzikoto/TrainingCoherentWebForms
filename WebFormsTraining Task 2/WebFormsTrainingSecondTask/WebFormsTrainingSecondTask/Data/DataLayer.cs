@@ -36,12 +36,13 @@ namespace WebFormsTrainingSecondTask.Data
                 _command = new SqlCommand(query, _connection);
                 _adapter = new SqlDataAdapter(_command);
 
+                //Table names could be moved to some static file, or get the name from the configuration
                 _adapter.Fill(new DataSet(), "TasksTable");
 
 
                 if (allqueries.Contains("insert into "))
                 {
-                    GetMessage = "inserted Successfully!";
+                    GetMessage = "Inserted Successfully!";
                 }
                 else if (allqueries.Contains("delete from "))
                 {
