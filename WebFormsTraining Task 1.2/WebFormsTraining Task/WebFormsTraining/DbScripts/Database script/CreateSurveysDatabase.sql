@@ -1,6 +1,6 @@
- IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'SurveyDB')
+ IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'SurveysDB')
   BEGIN
-    CREATE DATABASE [SurveyDB]
+    CREATE DATABASE [SurveysDB]
 
 
     END
