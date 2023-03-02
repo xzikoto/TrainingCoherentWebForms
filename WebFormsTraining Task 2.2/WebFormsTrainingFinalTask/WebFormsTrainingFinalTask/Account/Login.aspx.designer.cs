@@ -7,74 +7,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFormsTraining
-{
-
-
-    public partial class _Default
-    {
-
+namespace WebFormsTrainingFinalTask.Account {
+    
+    
+    public partial class Login {
+        
         /// <summary>
-        /// Name control.
+        /// ErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Name;
-
+        protected global::System.Web.UI.WebControls.PlaceHolder ErrorMessage;
+        
         /// <summary>
-        /// age control.
+        /// FailureText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox age;
-
+        protected global::System.Web.UI.WebControls.Literal FailureText;
+        
         /// <summary>
-        /// cusCustom control.
+        /// Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cusCustom;
-
+        protected global::System.Web.UI.WebControls.TextBox Email;
+        
         /// <summary>
-        /// Gender control.
+        /// Password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Gender;
-
+        protected global::System.Web.UI.WebControls.TextBox Password;
+        
         /// <summary>
-        /// txtCategory control.
+        /// RememberMe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtCategory;
-
+        protected global::System.Web.UI.WebControls.CheckBox RememberMe;
+        
         /// <summary>
-        /// RepeaterQuestions control.
+        /// RegisterHyperLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater RepeaterQuestions;
-
+        protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
+        
         /// <summary>
-        /// SubmitButton control.
+        /// OpenAuthLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitButton;
+        protected global::WebFormsTrainingFinalTask.Account.OpenAuthProviders OpenAuthLogin;
     }
 }
