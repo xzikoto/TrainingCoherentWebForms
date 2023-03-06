@@ -12,6 +12,8 @@ using System.Drawing;
 using WebFormsTraining.DataAccess;
 using WebFormsTraining.Models.Users;
 using WebFormsTraining.Models.Enums;
+using WebFormsTraining.Services;
+using System.Threading;
 
 namespace WebFormsTraining
 {
@@ -21,7 +23,7 @@ namespace WebFormsTraining
         {
             if (!Page.IsPostBack)
             {
-                RepeaterQuestions.DataSource = DataAccessService.GetData(QueriesConfigurations.GetQuestionsDataQuery());
+                RepeaterQuestions.DataSource = DataAccessService.FillData(QueriesConfigurations.GetQuestionsDataQuery());
                 RepeaterQuestions.DataBind();
             }
         }
@@ -33,7 +35,7 @@ namespace WebFormsTraining
                 string questionId = (e.Item.FindControl("QuestionId") as Label).Text;
                 Repeater repeaterOptions = e.Item.FindControl("RepeaterOptions") as Repeater;
 
-                repeaterOptions.DataSource = DataAccessService.GetData(QueriesConfigurations.GetQuestionOptionsDataQuery(questionId));
+                repeaterOptions.DataSource = DataAccessService.FillData(QueriesConfigurations.GetQuestionOptionsDataQuery(questionId));
                 repeaterOptions.DataBind();
             }
         }
@@ -46,56 +48,48 @@ namespace WebFormsTraining
                 return;
             }
 
-            if (!CheckAllQuestionsAnswered())
-            {
-                return;
-            }
-            CreateUser();
-            Response.Redirect("Results.aspx");
+            UserService.CreateUser(Name.Text.ToString(), age.Text, txtCategory.SelectedValue.ToString());
+
+            var userId = UserService.GetLatestUserId();
+
+            var a = SummarizeQuestions(userId);
+
+            SummarizeQuestions(userId).ForEach(u => UserAnswersService.CreateUserAnswers(u));
+
+
+            //Response.Redirect("Results.aspx");
         }
 
-        private bool CheckAllQuestionsAnswered()
+        private List<UserAnswers> SummarizeQuestions(int userId)
         {
-            var isFormValid = true;
+            var userAnswersCollection = new List<UserAnswers>();
 
-            foreach (RepeaterItem item in RepeaterQuestions.Items)
+            foreach (var item in RepeaterQuestions.Items)
             {
-                Repeater repeaterOptions = item.FindControl("RepeaterOptions") as Repeater;
+                var userAnswer = new UserAnswers() { UserId = userId };
+                var nestedRepeater = item as RepeaterItem;
 
-                bool option1 = (item.FindControl("option1") as RadioButton).Checked;
-                bool option2 = (item.FindControl("option2") as RadioButton).Checked;
-                bool option3 = (item.FindControl("option3") as RadioButton).Checked;
-                bool option4 = (item.FindControl("option4") as RadioButton).Checked;
+                //foreach (var nestedItem in nestedRepeater)
+                //{
+                //    var label = nestedItem as Label;
+                //    if (label != null && label.ID == "QuestionId")
+                //    {
+                //        userAnswer.QuestionId = Convert.ToInt32(label.Text);
+                //    }
+                //    if (label != null && label.ID == "OptionId")
+                //    {
+                //        userAnswer.OptionId = Convert.ToInt32(label.Text);
+                //    }
+                //    if (label != null && label.ID == "IsCorrect")
+                //    {
+                //        userAnswer.IsCorrect = Convert.ToInt32(label.Text);
+                //    }
+                //}
 
-                if (option1 || option2 || option3 || option4)
-                {
-                    var label = item.FindControl("answerValidation") as Label;
-                    label.Visible = false;
-                }
-                else
-                {
-                    var label = item.FindControl("answerValidation") as Label;
-
-                    label.Visible = true;
-                    label.BackColor = Color.Red;
-
-                    isFormValid = false;
-                }
+                userAnswersCollection.Add(userAnswer);
             }
 
-            return isFormValid;
-        }
-
-        private void CreateUser()
-        {
-            var newUser = new User()
-            {
-                Name = Name.Text.ToString(),
-                Age = Convert.ToInt32(age.Text),
-                Gender = (GenderEnum)Enum.Parse(typeof(GenderEnum), txtCategory.SelectedValue.ToString(), true),
-            };
-
-            CommandsConfiguration.CreateUserCommand(newUser.Name, newUser.Age, newUser.Gender.ToString());
+            return userAnswersCollection;
         }
 
         protected void cusCustom_ServerValidate(object source, ServerValidateEventArgs args)
@@ -120,6 +114,5 @@ namespace WebFormsTraining
 
             args.IsValid = false;
         }
-
     }
 }

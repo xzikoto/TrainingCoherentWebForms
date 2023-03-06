@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
             <label for="Age">Age</label>
-            <asp:TextBox class="form-control" ID="age" aria-describedby="AgeHelp" placeholder="Enter age" runat="server" CausesValidation="true"></asp:TextBox>
+            <asp:TextBox class="form-control" ID="age" aria-describedby="AgeHelp" placeholder="Enter age" runat="server" CausesValidation="true" required="required"></asp:TextBox>
             <small id="AgeHelp" class="form-text text-muted">Please, enter your Age</small>
             <br>
             <asp:CustomValidator runat="server" ValidateEmptyText="True" ID="cusCustom" ControlToValidate="age" ValidationGroup="submission" OnServerValidate="cusCustom_ServerValidate" ErrorMessage="Age must be between 0 and 120!" />
@@ -29,7 +29,7 @@
             <div class="col-md-4">
                 <asp:Repeater ID="RepeaterQuestions" runat="server" OnItemDataBound="OnItemDataBound">
                     <ItemTemplate>
-                        <table>
+                        <table id="quizTable">
                             <tr>
                                 <td>
                                     <asp:Label ID="QuestionId" runat="server" Text='<%#Eval("QuestionId") %>'></asp:Label>
@@ -37,22 +37,23 @@
                                     <asp:Label ID="Question" runat="server" Text='<%#Eval("Question") %>'></asp:Label>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="quizOptions">
                                 <td scope="col-8">
-                                    <asp:Repeater ID="RepeaterOptions" runat="server">
+                                    <asp:Repeater ID="repeaterOptions" runat="server">
                                         <ItemTemplate>
                                             <asp:RadioButton CssClass="tdrbn" runat="server" Text='<%#Eval("Option") %>'></asp:RadioButton>
+                                            <asp:Label ID="OptionId" hidden="true" runat="server" Text='<%#Eval("OptionId") %>'></asp:Label>
+                                            <asp:Label ID='IsCorrect' hidden="true" runat="server" Text='<%#Eval("IsCorrect") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                     </br> 
                                 </td>
                             </tr>
                             <tr>
-                                <asp:Label ID="answerValidation" runat="server" Text='Please, check one of the possible answers!' Visible="false"></asp:Label>
                             </tr>
                             <tr>
                                 <td>
-                                    <asp:Label ID="LabelUserSelectedOption" runat="server" Text=""></asp:Label>
+                                    <asp:Label ID="LabelUserSelectedOption" hidden="true" runat="server" Text="Please, answer all the questions!"></asp:Label>
                                 </td>
                             </tr>
                         </table>

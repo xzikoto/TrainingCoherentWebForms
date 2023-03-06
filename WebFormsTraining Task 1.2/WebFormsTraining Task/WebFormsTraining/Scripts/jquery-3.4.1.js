@@ -2877,7 +2877,7 @@ jQuery.filter = function( expr, elems, not ) {
 jQuery.fn.extend( {
 	find: function( selector ) {
 		var i, ret,
-			len = this.length,
+			_len = this.length,
 			self = this;
 
 		if ( typeof selector !== "string" ) {
