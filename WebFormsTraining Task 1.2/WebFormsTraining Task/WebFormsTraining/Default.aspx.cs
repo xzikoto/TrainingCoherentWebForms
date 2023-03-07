@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
-using WebFormsTraining.Models;
-using System.Drawing;
 using WebFormsTraining.DataAccess;
-using WebFormsTraining.Models.Users;
-using WebFormsTraining.Models.Enums;
+using WebFormsTraining.Models;
 using WebFormsTraining.Services;
-using System.Threading;
 
 namespace WebFormsTraining
 {
@@ -23,21 +15,82 @@ namespace WebFormsTraining
         {
             if (!Page.IsPostBack)
             {
-                RepeaterQuestions.DataSource = DataAccessService.FillData(QueriesConfigurations.GetQuestionsDataQuery());
+                var questionOptionsDataTable = DataAccessService.FillData(QueriesConfigurations.GetQuestionsOptionsDataQuery());
+
+                var questionOptionsDictionary = CreateQuestionsOptionsDictionary(questionOptionsDataTable);
+                RepeaterQuestions.DataSource = CreateDataTable(questionOptionsDictionary);
                 RepeaterQuestions.DataBind();
             }
         }
 
-        protected void OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        private Dictionary<int, QuestionOptions> CreateQuestionsOptionsDictionary(DataTable dataTable)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                string questionId = (e.Item.FindControl("QuestionId") as Label).Text;
-                Repeater repeaterOptions = e.Item.FindControl("RepeaterOptions") as Repeater;
+            var dictionary = new Dictionary<int, QuestionOptions>();
 
-                repeaterOptions.DataSource = DataAccessService.FillData(QueriesConfigurations.GetQuestionOptionsDataQuery(questionId));
-                repeaterOptions.DataBind();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                var questionId = Convert.ToInt32(dataTable.Rows[i]["QuestionId"]);
+                var question = dataTable.Rows[i]["Question"].ToString();
+                var option = dataTable.Rows[i]["Option"].ToString();
+                var optionId = Convert.ToInt32(dataTable.Rows[i]["OptionId"].ToString());
+                var isCorrect = Convert.ToBoolean(dataTable.Rows[i]["IsCorrect"].ToString());
+
+                QuestionOptions questionOptions = new QuestionOptions()
+                {
+                    QuestionId = questionId,
+                    Question = question,
+                    CorrectOptionId = isCorrect == true ? optionId : 0,
+                };
+
+                if (!dictionary.ContainsKey(questionId))
+                {
+                    dictionary.Add(questionId, questionOptions);
+                }
+
+                dictionary[questionId].Options.Add(new Option { OptionId = optionId, Text = option });
             }
+
+            return dictionary;
+        }
+
+        private DataTable CreateDataTable(Dictionary<int, QuestionOptions> dictionary)
+        {
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("QuestionId");
+            dataTable.Columns.Add("Question");
+            dataTable.Columns.Add("Option1");
+            dataTable.Columns.Add("Option1Id");
+            dataTable.Columns.Add("Option2");
+            dataTable.Columns.Add("Option2Id");
+            dataTable.Columns.Add("Option3");
+            dataTable.Columns.Add("Option3Id");
+            dataTable.Columns.Add("Option4");
+            dataTable.Columns.Add("Option4Id");
+
+            dataTable.Columns.Add("CorrectOptionId");
+            dataTable.Columns.Add("CorrectOption");
+
+            foreach (var item in dictionary)
+            {
+                DataRow row = dataTable.NewRow();
+
+                row["QuestionId"] = item.Value.QuestionId;
+                row["Question"] = item.Value.Question;
+                row["Option1"] = item.Value.Options[0].Text;
+                row["Option2"] = item.Value.Options[1].Text;
+                row["Option3"] = item.Value.Options[2].Text;
+                row["Option4"] = item.Value.Options[3].Text;
+                row["Option1Id"] = item.Value.Options[0].OptionId;
+                row["Option2Id"] = item.Value.Options[1].OptionId;
+                row["Option3Id"] = item.Value.Options[2].OptionId;
+                row["Option4Id"] = item.Value.Options[3].OptionId;
+                row["CorrectOptionId"] = item.Value.CorrectOptionId;
+
+                dataTable.Rows.Add(row);
+            }
+
+            return dataTable;
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
@@ -52,40 +105,33 @@ namespace WebFormsTraining
 
             var userId = UserService.GetLatestUserId();
 
-            var a = SummarizeQuestions(userId);
+            var summarizedQuestion = SummarizeQuestions(userId);
 
-            SummarizeQuestions(userId).ForEach(u => UserAnswersService.CreateUserAnswers(u));
-
-
-            //Response.Redirect("Results.aspx");
+            summarizedQuestion.ForEach(u => UserAnswersService.CreateUserAnswers(u));
         }
 
         private List<UserAnswers> SummarizeQuestions(int userId)
         {
             var userAnswersCollection = new List<UserAnswers>();
 
-            foreach (var item in RepeaterQuestions.Items)
+            foreach (var repeaterItem in RepeaterQuestions.Items)
             {
-                var userAnswer = new UserAnswers() { UserId = userId };
-                var nestedRepeater = item as RepeaterItem;
+                var userAnswer = new UserAnswers
+                {
+                    UserId = userId,
+                    QuestionId = Convert.ToInt32(((Label)(repeaterItem as RepeaterItem).FindControl("QuestionId")).Text),
+                    CorrectOptionId = Convert.ToInt32(((Label)(repeaterItem as RepeaterItem).FindControl("CorrectOptionId")).Text)
+                };
 
-                //foreach (var nestedItem in nestedRepeater)
-                //{
-                //    var label = nestedItem as Label;
-                //    if (label != null && label.ID == "QuestionId")
-                //    {
-                //        userAnswer.QuestionId = Convert.ToInt32(label.Text);
-                //    }
-                //    if (label != null && label.ID == "OptionId")
-                //    {
-                //        userAnswer.OptionId = Convert.ToInt32(label.Text);
-                //    }
-                //    if (label != null && label.ID == "IsCorrect")
-                //    {
-                //        userAnswer.IsCorrect = Convert.ToInt32(label.Text);
-                //    }
-                //}
+                foreach (var item in (repeaterItem as RepeaterItem).Controls)
+                {
+                    if ((item as RadioButton) != null && (item as RadioButton).Checked == true)
+                    {
+                        userAnswer.OptionId = Convert.ToInt32((item as RadioButton).CssClass);
+                    }
+                }
 
+                userAnswer.IsCorrect = userAnswer.OptionId == userAnswer.CorrectOptionId ? 1 : 0;
                 userAnswersCollection.Add(userAnswer);
             }
 

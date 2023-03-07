@@ -27,29 +27,31 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <asp:Repeater ID="RepeaterQuestions" runat="server" OnItemDataBound="OnItemDataBound">
+                <asp:Repeater ID="RepeaterQuestions" runat="server">
                     <ItemTemplate>
-                        <table id="quizTable">
+                        <table id="quizTable" class="table">
                             <tr>
                                 <td>
                                     <asp:Label ID="QuestionId" runat="server" Text='<%#Eval("QuestionId") %>'></asp:Label>
                                     : 
-                                    <asp:Label ID="Question" runat="server" Text='<%#Eval("Question") %>'></asp:Label>
+                                <asp:Label ID="Question" runat="server" Text='<%#Eval("Question") %>'></asp:Label>
+                                <asp:Label ID="CorrectOptionId" hidden="true" runat="server" Text='<%#Eval("CorrectOptionId") %>'></asp:Label>
                                 </td>
                             </tr>
                             <tr class="quizOptions">
-                                <td scope="col-8">
-                                    <asp:Repeater ID="repeaterOptions" runat="server">
-                                        <ItemTemplate>
-                                            <asp:RadioButton CssClass="tdrbn" runat="server" Text='<%#Eval("Option") %>'></asp:RadioButton>
-                                            <asp:Label ID="OptionId" hidden="true" runat="server" Text='<%#Eval("OptionId") %>'></asp:Label>
-                                            <asp:Label ID='IsCorrect' hidden="true" runat="server" Text='<%#Eval("IsCorrect") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                    </br> 
+                                <td class="col-sm-2">
+                                    <asp:RadioButton ID="Option1" runat="server" Text='<%#Eval("Option1") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option1Id") %>'></asp:RadioButton>
                                 </td>
-                            </tr>
-                            <tr>
+                                <td class="col-sm-2">
+                                    <asp:RadioButton runat="server" Text='<%#Eval("Option2") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option2Id") %>'></asp:RadioButton>
+                                </td>
+                                <td class="col-sm-2">
+                                    <asp:RadioButton runat="server" Text='<%#Eval("Option3") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option3Id") %>'></asp:RadioButton>
+                                </td>
+                                <td class="col-sm-2">
+                                    <asp:RadioButton runat="server" Text='<%#Eval("Option4") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option4Id") %>'></asp:RadioButton>
+                                </td>
+                                <%--<asp:Label ID="OptionId" hidden="true" runat="server" Text='<%#Eval("CorrectOptionId") %>'></asp:Label>--%>
                             </tr>
                             <tr>
                                 <td>
@@ -59,6 +61,8 @@
                         </table>
                     </ItemTemplate>
                 </asp:Repeater>
+
+
                 <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
             </div>
         </div>

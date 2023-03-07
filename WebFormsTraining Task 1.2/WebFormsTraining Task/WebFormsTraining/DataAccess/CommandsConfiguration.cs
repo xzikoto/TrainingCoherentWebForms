@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebFormsTraining.DataAccess
+﻿namespace WebFormsTraining.DataAccess
 {
     public static class CommandsConfiguration
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using WebFormsTraining.DataAccess;
+﻿using WebFormsTraining.DataAccess;
 using WebFormsTraining.Models;
 
 namespace WebFormsTraining.Services

@@ -20,15 +20,15 @@
                     isChecked = true;
                 }
             });
-            
-            if (isChecked == false) {
-                $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').attr('hidden', false);
-                $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').css('color', 'red');
-                e.preventDefault();
-            }
-            else {
-                $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').attr('hidden', true);
-            }
+            //Modify it not hardcoded!
+            //if (isChecked == false) {
+            //    $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').attr('hidden', false);
+            //    $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').css('color', 'red');
+            //    e.preventDefault();
+            //}
+            //else {
+            //    $('#MainContent_ChildContent3_RepeaterQuestions_LabelUserSelectedOption_1').attr('hidden', true);
+            //}
         })
     })
 });

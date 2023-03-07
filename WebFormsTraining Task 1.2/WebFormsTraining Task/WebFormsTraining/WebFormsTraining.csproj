@@ -177,6 +177,8 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\GenderEnum.cs" />
+    <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\QuestionOptions.cs" />
     <Compile Include="Models\Statistics\UserAnswers.cs" />
     <Compile Include="Models\Users\User.cs" />
     <Compile Include="Results.aspx.cs">
