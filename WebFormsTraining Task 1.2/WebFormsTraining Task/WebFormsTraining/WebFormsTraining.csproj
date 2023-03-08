@@ -108,10 +108,10 @@
     <Content Include="DbScripts\Database script\CreateSurveysDatabase.sql" />
     <Content Include="DbScripts\DeploymentScript.sql" />
     <Content Include="DbScripts\PopulateData scripts\PopulateQuestionsDatabaseTables.sql" />
-    <Content Include="DbScripts\Tables scripts\CreateQuestionOptionsTable.sql" />
-    <Content Include="DbScripts\Tables scripts\CreateQuestionsTable.sql" />
-    <Content Include="DbScripts\Tables scripts\CreateUserQuestionAnswersTable.sql" />
-    <Content Include="DbScripts\Tables scripts\CreateUsersTable.sql" />
+    <Content Include="DbScripts\TablesScripts\CreateQuestionOptionsTable.sql" />
+    <Content Include="DbScripts\TablesScripts\CreateQuestionsTable.sql" />
+    <Content Include="DbScripts\TablesScripts\CreateUserQuestionAnswersTable.sql" />
+    <Content Include="DbScripts\TablesScripts\CreateUsersTable.sql" />
     <Content Include="Results.aspx" />
     <Content Include="Scripts\QuestionOptions\QuestionOptionsRadioButtonUnchecker.js" />
     <Content Include="Statistics.aspx" />
@@ -179,7 +179,8 @@
     <Compile Include="Models\Enums\GenderEnum.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\QuestionOptions.cs" />
-    <Compile Include="Models\Statistics\UserAnswers.cs" />
+    <Compile Include="Models\Users\UserAnswers.cs" />
+    <Compile Include="Models\Statistics\QuestionAnswersStatistics.cs" />
     <Compile Include="Models\Users\User.cs" />
     <Compile Include="Results.aspx.cs">
       <DependentUpon>Results.aspx</DependentUpon>
@@ -196,6 +197,7 @@
     <Compile Include="ChildMaster.master.designer.cs">
       <DependentUpon>ChildMaster.master</DependentUpon>
     </Compile>
+    <Compile Include="Services\StatisticsService.cs" />
     <Compile Include="Services\UserAnswersService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Statistics.aspx.cs">

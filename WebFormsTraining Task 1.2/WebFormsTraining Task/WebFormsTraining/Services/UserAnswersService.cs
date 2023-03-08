@@ -9,9 +9,9 @@ namespace WebFormsTraining.Services
         {
 
             var createUserQuery = CommandsConfiguration.CreateUserAnswerCommand(userAnswer.UserId,
-                                                                                userAnswer.QuestionId, 
-                                                                                userAnswer.IsCorrect,
-                                                                                userAnswer.OptionId);
+                                                                                userAnswer.QuestionId,
+                                                                                userAnswer.OptionId,
+                                                                                userAnswer.IsCorrect);
 
             DataAccessService.InsertData(createUserQuery);
         }

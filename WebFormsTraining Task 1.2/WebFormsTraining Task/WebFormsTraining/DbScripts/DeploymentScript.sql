@@ -1,5 +1,5 @@
 :r .\DatabaseScript\CreateSurveysDatabase.sql
-:r .\TablesScripts\CreateExamAnswersTable.sql
-:r .\TablesScripts\CreateOnlineExamsTable.sql
-:r .\TablesScripts\CreateQuestionStatisticsTable.sql
-:r .\PopulateDataScript\PopulateOnlineExamsTable.sql
+:r .\TablesScripts\CreateQuestionsTable.sql
+:r .\TablesScripts\CreateUsersTable.sql
+:r .\TablesScripts\CreateQuestionOptionsTable.sql
+:r .\TablesScripts\CreateUserQuestionAnswersTable.sql

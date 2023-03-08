@@ -29,13 +29,13 @@
             <div class="col-md-4">
                 <asp:Repeater ID="RepeaterQuestions" runat="server">
                     <ItemTemplate>
-                        <table id="quizTable" class="table">
+                        <table class="table">
                             <tr>
                                 <td>
                                     <asp:Label ID="QuestionId" runat="server" Text='<%#Eval("QuestionId") %>'></asp:Label>
                                     : 
                                 <asp:Label ID="Question" runat="server" Text='<%#Eval("Question") %>'></asp:Label>
-                                <asp:Label ID="CorrectOptionId" hidden="true" runat="server" Text='<%#Eval("CorrectOptionId") %>'></asp:Label>
+                                    <asp:Label ID="CorrectOptionId" hidden="true" runat="server" Text='<%#Eval("CorrectOptionId") %>'></asp:Label>
                                 </td>
                             </tr>
                             <tr class="quizOptions">
@@ -48,10 +48,9 @@
                                 <td class="col-sm-2">
                                     <asp:RadioButton runat="server" Text='<%#Eval("Option3") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option3Id") %>'></asp:RadioButton>
                                 </td>
-                                <td class="col-sm-2">
+                                <td class="col-sm-2 ">
                                     <asp:RadioButton runat="server" Text='<%#Eval("Option4") %>' GroupName="buttonGroup" CssClass='<%#Eval("Option4Id") %>'></asp:RadioButton>
                                 </td>
-                                <%--<asp:Label ID="OptionId" hidden="true" runat="server" Text='<%#Eval("CorrectOptionId") %>'></asp:Label>--%>
                             </tr>
                             <tr>
                                 <td>
@@ -61,8 +60,6 @@
                         </table>
                     </ItemTemplate>
                 </asp:Repeater>
-
-
                 <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
             </div>
         </div>

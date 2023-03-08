@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebFormsTraining.DataAccess;
@@ -46,7 +47,10 @@ namespace WebFormsTraining
                 {
                     dictionary.Add(questionId, questionOptions);
                 }
-
+                if (questionOptions.CorrectOptionId != 0)
+                {
+                    dictionary[questionId].CorrectOptionId = questionOptions.CorrectOptionId;
+                }
                 dictionary[questionId].Options.Add(new Option { OptionId = optionId, Text = option });
             }
 
@@ -108,6 +112,8 @@ namespace WebFormsTraining
             var summarizedQuestion = SummarizeQuestions(userId);
 
             summarizedQuestion.ForEach(u => UserAnswersService.CreateUserAnswers(u));
+
+            Response.Redirect("Results.aspx");
         }
 
         private List<UserAnswers> SummarizeQuestions(int userId)

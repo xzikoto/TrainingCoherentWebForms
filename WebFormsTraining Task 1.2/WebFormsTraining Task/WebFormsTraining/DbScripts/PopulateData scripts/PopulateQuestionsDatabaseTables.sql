@@ -3,7 +3,7 @@ GO
 
 IF OBJECT_ID('Questions', 'U') IS NOT NULL  
     INSERT INTO Questions (Question, IsActive)
-    VALUES ('What it the capital of Bulgaria?', 1);
+    VALUES ('What is the capital of Bulgaria?', 1);
 GO
 
 IF OBJECT_ID('QuestionOptions', 'U') IS NOT NULL  
@@ -21,21 +21,10 @@ IF OBJECT_ID('QuestionOptions', 'U') IS NOT NULL
 GO
 
 
-IF OBJECT_ID('Users', 'U') IS NOT NULL  
-    INSERT INTO Users ([Name], Age, Gender)
-    VALUES ('Ivaylo',24, 'MAN');
-GO
-    
-IF OBJECT_ID('UserQuestionAnswers', 'U') IS NOT NULL  
-    INSERT INTO UserQuestionAnswers (UserId, QuestionId, OptionId, IsCorrect)
-    VALUES (1,1,2,1);
-
-GO
-
 
 IF OBJECT_ID('Questions', 'U') IS NOT NULL  
     INSERT INTO Questions (Question, IsActive)
-    VALUES ('What it the capital of Germany?', 1);
+    VALUES ('What is the capital of Germany?', 1);
 GO
 
 IF OBJECT_ID('QuestionOptions', 'U') IS NOT NULL  
@@ -54,14 +43,3 @@ IF OBJECT_ID('QuestionOptions', 'U') IS NOT NULL
 
 GO
 
-
-IF OBJECT_ID('Users', 'U') IS NOT NULL  
-    INSERT INTO Users ([Name], Age, Gender)
-    VALUES ('Igor',42, 'MAN');
-GO
-    
-IF OBJECT_ID('UserQuestionAnswers', 'U') IS NOT NULL  
-    INSERT INTO UserQuestionAnswers (UserId, QuestionId, OptionId, IsCorrect)
-    VALUES (2,2,2,1);
-
-GO

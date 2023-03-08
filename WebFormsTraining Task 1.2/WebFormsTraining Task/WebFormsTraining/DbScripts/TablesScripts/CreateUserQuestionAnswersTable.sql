@@ -7,7 +7,7 @@ GO
 
 CREATE TABLE UserQuestionAnswers 
 (
-	UserId int not null primary key FOREIGN KEY REFERENCES Users(UserId), 
+	UserId int not null  FOREIGN KEY REFERENCES Users(UserId), 
 	QuestionId int not null  FOREIGN KEY REFERENCES Questions(QuestionId),
 	OptionId int not null  FOREIGN KEY REFERENCES QuestionOptions(OptionId),
 	IsCorrect bit not null
