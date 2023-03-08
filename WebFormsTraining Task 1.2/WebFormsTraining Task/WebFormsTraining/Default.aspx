@@ -57,7 +57,7 @@
                                     <asp:Label ID="LabelUserSelectedOption" hidden="true" runat="server" Text="Please, answer all the questions!"></asp:Label>
                                 </td>
                             </tr>
-                        </table>
+                             </table>
                     </ItemTemplate>
                 </asp:Repeater>
                 <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
@@ -68,4 +68,5 @@
 
 
 </asp:Content>
+
 

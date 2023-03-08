@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -99,6 +100,11 @@ namespace WebFormsTraining
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
+            if (!ValidateButtons())
+            {
+                return;
+            }
+
             Page.Validate("submission");
             if (!Page.IsValid)
             {
@@ -143,7 +149,30 @@ namespace WebFormsTraining
 
             return userAnswersCollection;
         }
+        private bool ValidateButtons()
+        {
+            foreach (var repeaterItem in RepeaterQuestions.Items)
+            {
+                var isQuestionAnswered = false;
+                foreach (var item in (repeaterItem as RepeaterItem).Controls)
+                {
+                    if ((item as RadioButton) != null && (item as RadioButton).Checked == true)
+                    {
+                        isQuestionAnswered = true;
+                    }
+                }
 
+                if (!isQuestionAnswered)
+                {
+                    var label = ((Label)(repeaterItem as RepeaterItem).FindControl("LabelUserSelectedOption"));
+                    label.BackColor = Color.Red;
+                    label.Visible = true;
+                    return false;
+                }
+            }
+
+            return true;
+        }
         protected void cusCustom_ServerValidate(object source, ServerValidateEventArgs args)
         {
             string str = args.Value;
