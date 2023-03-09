@@ -4,6 +4,5 @@ namespace WebFormsTrainingSecondTask.Core.Tasks
 {
     public interface ITasksRepository : IRepository<Task, int>
     {
-
     }
 }

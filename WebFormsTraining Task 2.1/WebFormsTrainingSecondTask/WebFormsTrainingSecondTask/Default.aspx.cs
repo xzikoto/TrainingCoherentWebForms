@@ -19,9 +19,10 @@ namespace WebFormsTrainingSecondTask
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Make only one instance of unitofwork
+            //and use it through the whole life cycle of the app
             UnitOfWork unitOfWork = new UnitOfWork(new UnitOfWorkOptions());
-
-            unitOfWork.TasksRepository.Find(1);
+            var a = unitOfWork.TasksRepository.Find(1);
 
             _dataLayer = new DataLayer();
             PopulateTasksByCategory();

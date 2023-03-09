@@ -4,13 +4,11 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using WebFormsTrainingSecondTask.Core.Entities;
-using WebFormsTrainingSecondTask.Core;
 using WebFormsTrainingSecondTask.Common;
-using WebFormsTrainingSecondTask.Infrastructure.Helpers;
+using WebFormsTrainingSecondTask.Core;
+using WebFormsTrainingSecondTask.Core.Entities;
 using WebFormsTrainingSecondTask.Core.Exception;
+using WebFormsTrainingSecondTask.Infrastructure.Helpers;
 
 namespace WebFormsTrainingSecondTask.Infrastructure
 {
@@ -99,7 +97,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure
 
         protected virtual TEntity InternalFind(Expression<Func<TEntity, bool>> predicate)
         {
-            return MakeInclusions().SingleOrDefault(predicate);
+            return MakeInclusions().FirstOrDefault(predicate);
         }
 
         protected virtual IEnumerable<TEntity> InternalFilter(Expression<Func<TEntity, bool>> predicate)

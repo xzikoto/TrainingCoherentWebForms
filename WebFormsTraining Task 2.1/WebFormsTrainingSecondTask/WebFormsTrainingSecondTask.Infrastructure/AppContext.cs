@@ -1,21 +1,28 @@
-﻿using System.Configuration;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using System.Data.Entity;
+using System.Security;
+using WebFormsTrainingSecondTask.Core.Entities.Tasks;
+using WebFormsTrainingSecondTask.Infrastructure.Configs;
 
 namespace WebFormsTrainingSecondTask.Infrastructure
 {
-    internal class AppContext : DbContext
+    public class AppContext : DbContext
     {
-        internal AppContext() : base("name=QuizDatabaseConnectionString")
+        public AppContext() : base("name=QuizDatabaseConnectionString")
         {
-            Database.Connection.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
+            base.Database.Connection.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
+
+        }
+
+        public static AppContext Create()
+        {
+            return new AppContext();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new TaskConfig());
 
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

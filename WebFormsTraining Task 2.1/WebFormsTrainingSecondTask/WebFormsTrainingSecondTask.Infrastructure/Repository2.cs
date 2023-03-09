@@ -11,6 +11,9 @@ namespace WebFormsTrainingSecondTask.Infrastructure
         {
         }
 
-        public virtual TEntity Find(TKey id) => Find(x => x.Id.Equals(id));
+        public virtual TEntity Find(TKey id) 
+        {
+            return Find(x => x.Id.Equals(id));
+        }
     }
 }
