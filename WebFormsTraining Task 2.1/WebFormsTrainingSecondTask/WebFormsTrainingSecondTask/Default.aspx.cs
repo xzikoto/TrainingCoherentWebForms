@@ -7,6 +7,7 @@ using WebFormsTrainingSecondTask.Data;
 using WebFormsTrainingSecondTask.Data.Commands;
 using WebFormsTrainingSecondTask.Data.Core;
 using WebFormsTrainingSecondTask.Data.Queries;
+using WebFormsTrainingSecondTask.Infrastructure;
 using WebFormsTrainingSecondTask.Models.Enums;
 
 namespace WebFormsTrainingSecondTask
@@ -18,6 +19,10 @@ namespace WebFormsTrainingSecondTask
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            UnitOfWork unitOfWork = new UnitOfWork(new UnitOfWorkOptions());
+
+            unitOfWork.TasksRepository.Find(1);
+
             _dataLayer = new DataLayer();
             PopulateTasksByCategory();
         }
