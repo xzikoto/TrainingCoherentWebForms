@@ -7,7 +7,6 @@ namespace WebFormsTraining.DataAccess
     public static class DataAccessService
     {
         private static readonly string connectionString = ConfigurationManager.ConnectionStrings["QuizDatabaseConnectionString"].ConnectionString;
-
         public static object GetData(string query)
         {
             using (SqlConnection con = new SqlConnection(connectionString))

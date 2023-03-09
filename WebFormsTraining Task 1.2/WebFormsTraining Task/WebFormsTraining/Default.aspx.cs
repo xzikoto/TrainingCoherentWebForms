@@ -149,6 +149,7 @@ namespace WebFormsTraining
 
             return userAnswersCollection;
         }
+
         private bool ValidateButtons()
         {
             foreach (var repeaterItem in RepeaterQuestions.Items)

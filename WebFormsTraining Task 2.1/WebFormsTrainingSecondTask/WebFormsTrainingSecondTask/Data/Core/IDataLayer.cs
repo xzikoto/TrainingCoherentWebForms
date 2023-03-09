@@ -4,7 +4,7 @@ namespace WebFormsTrainingSecondTask.Data.Core
 {
     public interface IDataLayer
     {
-        string TaskCRUD(string query);
+        string ExecuteQuery(string query);
         string FillGridView(string query, GridView dgv, string category);
         bool Connect();
         bool Disconnect();

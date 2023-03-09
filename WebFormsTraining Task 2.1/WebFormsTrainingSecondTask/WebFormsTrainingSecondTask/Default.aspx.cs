@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebFormsTrainingSecondTask.Data;
+using WebFormsTrainingSecondTask.Data.Commands;
+using WebFormsTrainingSecondTask.Data.Core;
+using WebFormsTrainingSecondTask.Data.Queries;
 using WebFormsTrainingSecondTask.Models.Enums;
 
 namespace WebFormsTrainingSecondTask
 {
     public partial class _Default : Page
     {
-        private DataLayer _dataLayer;
+        private IDataLayer _dataLayer;
         private static string task_id;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -24,7 +26,7 @@ namespace WebFormsTrainingSecondTask
         {
             foreach (var item in Enum.GetValues(typeof(CategoryEnum)))
             {
-                string query = "SELECT * FROM TasksTable WHERE category = '" + item.ToString() + "'";
+                string query = QueriesConfiguration.GetTaskByCategory(item.ToString());
 
                 switch (item.ToString())
                 {
@@ -37,12 +39,11 @@ namespace WebFormsTrainingSecondTask
                         break;
                     
                     case nameof(CategoryEnum.LOW):
-                        _dataLayer.FillGridView(query, GridViewMedium, item.ToString());
+                        _dataLayer.FillGridView(query, GridViewLow, item.ToString());
                         break;
                 }
             }
         }
-
 
         protected void gv_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -66,31 +67,38 @@ namespace WebFormsTrainingSecondTask
 
         protected void btnsave_Click(object sender, EventArgs e)
         {
-            string query = "INSERT INTO TasksTable(task_name, category, date)" +
-                           "VALUES('" + taskName.Text + "','" + txtCategory.Text + "','" + txtdob.Text + "')";
+            string query = CommandsConfiguration.GetCreateTaskCommand(taskName.Text, txtCategory.Text, txtdob.Text);
 
-            lblmessage.Text = _dataLayer.TaskCRUD(query);
+            lblmessage.Text = _dataLayer.ExecuteQuery(query);
 
             CleanAllFields();
+
+            RefreshPage();
         }
 
         protected void btnupdate_Click(object sender, EventArgs e)
         {
-            string query = "UPDATE TasksTable " +
-                           "SET task_name = '" + taskName.Text + "'," +
-                           "category = '"+ txtCategory.Text +"'," +
-                           "date = '"+ txtdob.Text +"'" +
-                           "WHERE task_id = '"+ task_id + "'";
+            string query = CommandsConfiguration.GetUpdateTaskCommand(task_id, taskName.Text, txtCategory.Text, txtdob.Text);
 
-            lblmessage.Text = _dataLayer.TaskCRUD(query);
+            lblmessage.Text = _dataLayer.ExecuteQuery(query);
+
             CleanAllFields();
+
+            RefreshPage();
         }
-        
+
         protected void btndlt_Click(object sender, EventArgs e)
         {
-            string query = "DELETE FROM TasksTable WHERE task_id = '" + task_id + "'";
+            string query = CommandsConfiguration.GetDeleteTaskCommand(task_id);
 
-            lblmessage.Text = _dataLayer.TaskCRUD(query);
+            lblmessage.Text = _dataLayer.ExecuteQuery(query);
+
+            RefreshPage();
+        }
+
+        private void RefreshPage()
+        {
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
 
         private void CleanAllFields()

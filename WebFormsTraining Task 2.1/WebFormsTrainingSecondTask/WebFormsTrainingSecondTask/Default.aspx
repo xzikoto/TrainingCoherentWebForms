@@ -9,7 +9,7 @@
                     <section class="panel">
                         <header class="panel-heading">
                             <div class="col-md-4 col-md-offset-4">
-                                <h1>Student Registration</h1>
+                                <h1>Task Priority Manager</h1>
                             </div>
 
                         </header>

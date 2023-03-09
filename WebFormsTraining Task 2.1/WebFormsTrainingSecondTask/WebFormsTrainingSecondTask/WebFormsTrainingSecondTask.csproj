@@ -179,8 +179,10 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data\Commands\CommandsConfiguration.cs" />
     <Compile Include="Data\Core\IDataLayer.cs" />
     <Compile Include="Data\DataLayer.cs" />
+    <Compile Include="Data\Queries\QueriesConfiguration.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -217,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Guard\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

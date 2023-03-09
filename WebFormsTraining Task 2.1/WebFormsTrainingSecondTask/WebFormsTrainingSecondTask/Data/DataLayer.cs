@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
 using WebFormsTrainingSecondTask.Data.Core;
 
@@ -26,7 +23,7 @@ namespace WebFormsTrainingSecondTask.Data
         public string ConnectionString { get; set; }
         public string GetMessage { get; set; }
 
-        public string TaskCRUD(string query)
+        public string ExecuteQuery(string query)
         {
             string allqueries = query.ToLower();
             try
@@ -38,7 +35,6 @@ namespace WebFormsTrainingSecondTask.Data
 
                 //Table names could be moved to some static file, or get the name from the configuration
                 _adapter.Fill(new DataSet(), "TasksTable");
-
 
                 if (allqueries.Contains("insert into "))
                 {
@@ -56,12 +52,9 @@ namespace WebFormsTrainingSecondTask.Data
                 {
                     GetMessage = "Updated Successfully";
                 }
-
-
             }
             catch (Exception exp)
             {
-
                 GetMessage = "Failed to execute " + query + " \n Reason : " + exp.Message;
             }
             finally { Disconnect(); }
@@ -84,8 +77,7 @@ namespace WebFormsTrainingSecondTask.Data
                 dgv.DataSource = dt;
                 dgv.DataBind();
 
-
-                GetMessage = "Code Executed Successfully (filldatagridView()=> datalayer.cs)";
+                GetMessage = "Code Executed Successfully (filldatagridView() => datalayer.cs)";
             }
             catch (Exception exp)
             {
@@ -97,7 +89,6 @@ namespace WebFormsTrainingSecondTask.Data
             }
 
             return GetMessage;
-
         }
 
         public bool Connect()
@@ -110,13 +101,11 @@ namespace WebFormsTrainingSecondTask.Data
             catch (Exception)
             {
                 return false;
-
             }
         }
 
         public bool Disconnect()
         {
-
             try
             {
                 _connection.Close();
@@ -125,7 +114,6 @@ namespace WebFormsTrainingSecondTask.Data
             catch (Exception)
             {
                 return false;
-
             }
 
         }
