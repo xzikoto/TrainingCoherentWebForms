@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using WebFormsTrainingSecondTask.Core.Entities;
 using WebFormsTrainingSecondTask.Core.Entities.Tasks;
 
@@ -25,10 +24,10 @@ namespace WebFormsTrainingSecondTask.Infrastructure.Seeder
 
             var taskName = "TaskName";
             var randomDate = new RandomDateTime();
+            var rand = new Random();
 
             for (int i = 1; i <= new Random().Next(30); i++)
             {
-                var rand = new Random();
 
                 tasksList.Add(new Task()
                 {

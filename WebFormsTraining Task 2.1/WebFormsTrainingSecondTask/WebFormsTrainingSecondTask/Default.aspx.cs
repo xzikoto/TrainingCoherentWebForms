@@ -1,52 +1,52 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WebFormsTrainingSecondTask.Data;
-using WebFormsTrainingSecondTask.Data.Commands;
-using WebFormsTrainingSecondTask.Data.Core;
-using WebFormsTrainingSecondTask.Data.Queries;
-using WebFormsTrainingSecondTask.Infrastructure;
+using WebFormsTrainingSecondTask.Core.Entities;
+using WebFormsTrainingSecondTask.Core.Entities.Tasks;
+using WebFormsTrainingSecondTask.DataAccessService;
 using WebFormsTrainingSecondTask.Models.Enums;
 
 namespace WebFormsTrainingSecondTask
 {
     public partial class _Default : Page
     {
-        private IDataLayer _dataLayer;
-        private static string task_id;
+        private static Guid task_id;
+        private static List<Category> categories;
+        private static List<Task> tasks;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Make only one instance of unitofwork
-            //and use it through the whole life cycle of the app
-            UnitOfWork unitOfWork = new UnitOfWork(new UnitOfWorkOptions());
-            var a = unitOfWork.TasksRepository.GetTaskById(Guid.Parse("B0EA444A-C592-4C35-89EF-07DBEB6FE8BE"));
+            tasks = UnitOfWorkService.Instance.TaskRepository.GetTasks().ToList();
+            categories = UnitOfWorkService.Instance.CategoryRepository.All().ToList();
 
-            _dataLayer = new DataLayer();
-            PopulateTasksByCategory();
+            PopulateTasksByCategory(tasks, categories);
         }
 
-        private void PopulateTasksByCategory()
+        private void PopulateTasksByCategory(List<Task> tasks, List<Category> categories)
         {
-            foreach (var item in Enum.GetValues(typeof(CategoryEnum)))
+            foreach (var item in categories)
             {
-                string query = QueriesConfiguration.GetTaskByCategory(item.ToString());
-
-                switch (item.ToString())
+                var tasksByCategory = tasks.Where(x => x.Category.Name == item.Name).ToList();
+               
+                switch (item.Name.ToString())
                 {
                     case nameof(CategoryEnum.HIGH):
-                        _dataLayer.FillGridView(query, GridViewHigh, item.ToString());
+                        GridViewHigh.DataSource = tasksByCategory;
+                        GridViewHigh.DataBind();
                         break;
-                    
+
                     case nameof(CategoryEnum.MEDIUM):
-                        _dataLayer.FillGridView(query, GridViewMedium, item.ToString());
+                        GridViewMedium.DataSource = tasksByCategory;
+                        GridViewMedium.DataBind();
                         break;
-                    
+
                     case nameof(CategoryEnum.LOW):
-                        _dataLayer.FillGridView(query, GridViewLow, item.ToString());
+                        GridViewLow.DataSource = tasksByCategory;
+                        GridViewLow.DataBind();
                         break;
                 }
             }
@@ -57,10 +57,10 @@ namespace WebFormsTrainingSecondTask
             var gridViewSender = (sender as GridView);
             RemoveSelectedRow();
 
-            task_id = gridViewSender.SelectedRow.Cells[1].Text.ToString();
-            taskName.Text = gridViewSender.SelectedRow.Cells[2].Text.ToString();
-            txtCategory.Text = gridViewSender.SelectedRow.Cells[3].Text.ToString();
-            txtdob.Text = FormatDate(gridViewSender.SelectedRow.Cells[4].Text.ToString().Split()[0]);
+            task_id = Guid.Parse(gridViewSender.SelectedRow.Cells[4].Text.ToString());
+            taskName.Text = gridViewSender.SelectedRow.Cells[3].Text.ToString();
+            txtCategory.Text = gridViewSender.SelectedRow.Cells[1].Text.ToString();
+            txtdob.Text = FormatDate(gridViewSender.SelectedRow.Cells[2].Text.ToString().Split()[0]);
 
             gridViewSender.SelectedRowStyle.BackColor = Color.Red;
         }
@@ -74,9 +74,18 @@ namespace WebFormsTrainingSecondTask
 
         protected void btnsave_Click(object sender, EventArgs e)
         {
-            string query = CommandsConfiguration.GetCreateTaskCommand(taskName.Text, txtCategory.Text, txtdob.Text);
+            var category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
 
-            lblmessage.Text = _dataLayer.ExecuteQuery(query);
+            UnitOfWorkService.Instance.TaskRepository.Add(
+                new Task
+                {
+                    Id = Guid.NewGuid(),
+                    Name = taskName.Text,
+                    Date = Convert.ToDateTime(txtdob.Text),
+                    Category = category,
+                });
+
+            UnitOfWorkService.Instance.Commit();
 
             CleanAllFields();
 
@@ -85,9 +94,13 @@ namespace WebFormsTrainingSecondTask
 
         protected void btnupdate_Click(object sender, EventArgs e)
         {
-            string query = CommandsConfiguration.GetUpdateTaskCommand(task_id, taskName.Text, txtCategory.Text, txtdob.Text);
+            var task = tasks.FirstOrDefault(c => c.Id == task_id);
 
-            lblmessage.Text = _dataLayer.ExecuteQuery(query);
+            task.Name = taskName.Text;
+            task.Date = Convert.ToDateTime(txtdob.Text);
+            task.Category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
+
+            UnitOfWorkService.Instance.Commit();
 
             CleanAllFields();
 
@@ -96,9 +109,12 @@ namespace WebFormsTrainingSecondTask
 
         protected void btndlt_Click(object sender, EventArgs e)
         {
-            string query = CommandsConfiguration.GetDeleteTaskCommand(task_id);
+            var task = tasks.FirstOrDefault(c => c.Id == task_id);
 
-            lblmessage.Text = _dataLayer.ExecuteQuery(query);
+            UnitOfWorkService.Instance.TaskRepository.Remove(task);
+            UnitOfWorkService.Instance.Commit();
+
+            CleanAllFields();
 
             RefreshPage();
         }
@@ -117,7 +133,7 @@ namespace WebFormsTrainingSecondTask
 
         private string FormatDate(string sourceDateText)
         {
-            DateTime sourceDate = DateTime.ParseExact(sourceDateText, "d/M/yyyy", CultureInfo.InvariantCulture);
+            DateTime sourceDate = DateTime.ParseExact(sourceDateText, "M/d/yyyy", CultureInfo.InvariantCulture);
 
             return sourceDate.ToString("yyyy-MM-dd");
         }

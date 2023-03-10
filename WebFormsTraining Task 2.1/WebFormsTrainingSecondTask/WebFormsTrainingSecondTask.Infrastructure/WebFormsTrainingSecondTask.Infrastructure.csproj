@@ -81,19 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
-    <Compile Include="Configs\CategoryConfig.cs" />
     <Compile Include="Configs\TaskConfig.cs" />
     <Compile Include="Helpers\SqlExceptionHelper.cs" />
-    <Compile Include="Migrations\202303101004152_Initial.cs" />
-    <Compile Include="Migrations\202303101004152_Initial.designer.cs">
-      <DependentUpon>202303101004152_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202303101017251_UpdatedModelsAndSeeder.cs" />
-    <Compile Include="Migrations\202303101017251_UpdatedModelsAndSeeder.designer.cs">
-      <DependentUpon>202303101017251_UpdatedModelsAndSeeder.cs</DependentUpon>
+    <Compile Include="Migrations\202303101408410_Initial.cs" />
+    <Compile Include="Migrations\202303101408410_Initial.designer.cs">
+      <DependentUpon>202303101408410_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\TasksRepository.cs" />
     <Compile Include="Repository1.cs" />
     <Compile Include="Repository2.cs" />
@@ -116,11 +112,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303101004152_Initial.resx">
-      <DependentUpon>202303101004152_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202303101017251_UpdatedModelsAndSeeder.resx">
-      <DependentUpon>202303101017251_UpdatedModelsAndSeeder.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303101408410_Initial.resx">
+      <DependentUpon>202303101408410_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

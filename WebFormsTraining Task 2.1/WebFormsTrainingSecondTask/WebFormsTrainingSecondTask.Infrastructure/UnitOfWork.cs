@@ -14,13 +14,16 @@ namespace WebFormsTrainingSecondTask.Infrastructure
     {
         private AppContext _context;
 
-        private TasksRepository _courseGroupRepository;
+        private TasksRepository _tasksRepository;
+        private CategoryRepository _categoriesRepository;
 
-        private AppContext Context => _context ?? new AppContext();
+        private AppContext Context => _context == null ? new AppContext() : _context;
 
         #region Catalog
-        public ITasksRepository TasksRepository =>
-            _courseGroupRepository ?? new TasksRepository(Context);
+
+        public ITasksRepository TaskRepository => _tasksRepository == null ? new TasksRepository(Context) : _tasksRepository;
+        
+        public ICategoryRepository CategoryRepository => _categoriesRepository == null ? new CategoryRepository(Context) : _categoriesRepository;
 
         #endregion
 
@@ -32,6 +35,10 @@ namespace WebFormsTrainingSecondTask.Infrastructure
         {
             options.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
             options.CommandTimeout = 200;
+        }
+
+        public UnitOfWork()
+        {
         }
 
         public void Commit()

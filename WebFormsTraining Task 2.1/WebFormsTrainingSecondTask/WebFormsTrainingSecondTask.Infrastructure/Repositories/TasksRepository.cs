@@ -24,6 +24,11 @@ namespace WebFormsTrainingSecondTask.Infrastructure.Repositories
             return MakeInclusions().FirstOrDefault(x=> x.Id == id);
         }
 
+        public IQueryable<Task> GetTasks()
+        {
+            return MakeInclusions();
+        }
+
         protected override IQueryable<Task> MakeInclusions()
         {
             return DbSet.Include(x => x.Category);

@@ -8,8 +8,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure
     {
         public AppContext() : base("name=QuizDatabaseConnectionString")
         {
-            //fix that
-            base.Database.Connection.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
+        
         }
 
         public static AppContext Create()

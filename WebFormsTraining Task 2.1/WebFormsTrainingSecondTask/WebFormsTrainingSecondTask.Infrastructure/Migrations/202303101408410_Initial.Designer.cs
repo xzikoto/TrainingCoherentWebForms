@@ -13,7 +13,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202303101004152_Initial"; }
+            get { return "202303101408410_Initial"; }
         }
         
         string IMigrationMetadata.Source

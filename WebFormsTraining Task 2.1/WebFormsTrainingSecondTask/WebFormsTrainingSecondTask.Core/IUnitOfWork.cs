@@ -5,7 +5,8 @@ namespace WebFormsTrainingSecondTask.Infrastructure.Core
 {
     public interface IUnitOfWork : IDisposable
     {
-        ITasksRepository TasksRepository { get; }
+        ITasksRepository TaskRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
 
         void Commit();
     }
