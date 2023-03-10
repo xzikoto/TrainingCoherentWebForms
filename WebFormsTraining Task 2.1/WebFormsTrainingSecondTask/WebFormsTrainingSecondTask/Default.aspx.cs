@@ -34,6 +34,8 @@ namespace WebFormsTrainingSecondTask
                
                 switch (item.Name.ToString())
                 {
+                    //Should be modified where if we have more categories in future
+                    //to automatically generate 
                     case nameof(CategoryEnum.HIGH):
                         GridViewHigh.DataSource = tasksByCategory;
                         GridViewHigh.DataBind();
@@ -54,7 +56,7 @@ namespace WebFormsTrainingSecondTask
 
         protected void gv_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var gridViewSender = (sender as GridView);
+            var gridViewSender = sender as GridView;
             RemoveSelectedRow();
 
             task_id = Guid.Parse(gridViewSender.SelectedRow.Cells[4].Text.ToString());

@@ -113,7 +113,6 @@
     <Content Include="DbScripts\TablesScripts\CreateUserQuestionAnswersTable.sql" />
     <Content Include="DbScripts\TablesScripts\CreateUsersTable.sql" />
     <Content Include="Results.aspx" />
-    <Content Include="Scripts\QuestionOptions\QuestionOptionsRadioButtonUnchecker.js" />
     <Content Include="Statistics.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

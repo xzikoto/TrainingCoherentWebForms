@@ -11,11 +11,6 @@ namespace WebFormsTrainingSecondTask.Infrastructure
         
         }
 
-        public static AppContext Create()
-        {
-            return new AppContext();
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new TaskConfig());

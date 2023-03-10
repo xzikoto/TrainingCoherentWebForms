@@ -43,7 +43,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure
 
         public void Commit()
         {
-            if (_context == null)
+            if (Context == null)
             {
                 return;
             }

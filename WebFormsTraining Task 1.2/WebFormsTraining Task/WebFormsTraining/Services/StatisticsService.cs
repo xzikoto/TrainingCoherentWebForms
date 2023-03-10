@@ -10,19 +10,20 @@ namespace WebFormsTraining.Services
     {
         public static QuestionAnswersStatistics CreateStatistics()
         {
-            QuestionAnswersStatistics questionAnswersStatistics = new QuestionAnswersStatistics();
-            
-            questionAnswersStatistics.CorrectAnswersOverall = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatistics(true)));
-            questionAnswersStatistics.WrongAnswersOverall = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatistics(false)));
-            
-            questionAnswersStatistics.CorrectAnswersMen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.MAN)));
-            questionAnswersStatistics.WrongAnswersMen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.MAN)));
-            
-            questionAnswersStatistics.CorrectAnswersWomen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.WOMAN)));
-            questionAnswersStatistics.WrongAnswersWomen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.WOMAN)));
-            
-            questionAnswersStatistics.CorrectAnswersChilds = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.CHILD)));
-            questionAnswersStatistics.WrongAnswersChilds = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.CHILD)));
+            QuestionAnswersStatistics questionAnswersStatistics = new QuestionAnswersStatistics
+            {
+                CorrectAnswersOverall = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatistics(true))),
+                WrongAnswersOverall = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatistics(false))),
+
+                CorrectAnswersMen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.MAN))),
+                WrongAnswersMen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.MAN))),
+
+                CorrectAnswersWomen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.WOMAN))),
+                WrongAnswersWomen = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.WOMAN))),
+
+                CorrectAnswersChilds = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(true, GenderEnum.CHILD))),
+                WrongAnswersChilds = Convert.ToInt32(DataAccessService.GetData(QueriesConfigurations.GetStatisticsByGender(false, GenderEnum.CHILD)))
+            };
 
             return questionAnswersStatistics;
         }
