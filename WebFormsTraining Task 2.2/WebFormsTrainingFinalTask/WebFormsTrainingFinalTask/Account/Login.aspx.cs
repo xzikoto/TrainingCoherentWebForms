@@ -38,8 +38,10 @@ namespace WebFormsTrainingFinalTask.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        var userId = User.Identity.GetUserId();
+                        var userRoles = manager.GetRoles(userId);
+
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-                        var userRoles = manager.GetRoles(IdentityHelper.UserIdKey);
                         break;
                     case SignInStatus.LockedOut:
                         Response.Redirect("/Account/Lockout");

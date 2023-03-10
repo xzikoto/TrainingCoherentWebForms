@@ -177,6 +177,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Entity1.cs" />
     <Compile Include="Entities\Tasks\Task.cs" />

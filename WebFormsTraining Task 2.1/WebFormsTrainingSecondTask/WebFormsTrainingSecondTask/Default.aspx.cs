@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebFormsTrainingSecondTask.Data;
@@ -22,7 +23,7 @@ namespace WebFormsTrainingSecondTask
             //Make only one instance of unitofwork
             //and use it through the whole life cycle of the app
             UnitOfWork unitOfWork = new UnitOfWork(new UnitOfWorkOptions());
-            var a = unitOfWork.TasksRepository.Find(1);
+            var a = unitOfWork.TasksRepository.GetTaskById(Guid.Parse("B0EA444A-C592-4C35-89EF-07DBEB6FE8BE"));
 
             _dataLayer = new DataLayer();
             PopulateTasksByCategory();

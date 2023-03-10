@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
-using System.Security;
-using WebFormsTrainingSecondTask.Core.Entities.Tasks;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using WebFormsTrainingSecondTask.Infrastructure.Configs;
 
 namespace WebFormsTrainingSecondTask.Infrastructure
@@ -9,8 +8,8 @@ namespace WebFormsTrainingSecondTask.Infrastructure
     {
         public AppContext() : base("name=QuizDatabaseConnectionString")
         {
+            //fix that
             base.Database.Connection.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
-
         }
 
         public static AppContext Create()
@@ -23,6 +22,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure
             modelBuilder.Configurations.Add(new TaskConfig());
 
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }
