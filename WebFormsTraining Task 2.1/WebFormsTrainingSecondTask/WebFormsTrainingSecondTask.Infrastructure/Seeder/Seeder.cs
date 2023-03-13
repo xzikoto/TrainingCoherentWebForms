@@ -26,7 +26,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure.Seeder
             var randomDate = new RandomDateTime();
             var rand = new Random();
 
-            for (int i = 1; i <= new Random().Next(30); i++)
+            for (int i = 1; i <= new Random().Next(20,30); i++)
             {
 
                 tasksList.Add(new Task()

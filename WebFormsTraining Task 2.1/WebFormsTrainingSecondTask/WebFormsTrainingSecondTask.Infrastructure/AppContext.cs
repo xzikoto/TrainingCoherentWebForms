@@ -6,6 +6,7 @@ namespace WebFormsTrainingSecondTask.Infrastructure
 {
     public class AppContext : DbContext
     {
+        //handle the magic string
         public AppContext() : base("name=QuizDatabaseConnectionString")
         {
         

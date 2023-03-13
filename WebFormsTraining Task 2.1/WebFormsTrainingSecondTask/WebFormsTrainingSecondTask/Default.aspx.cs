@@ -5,49 +5,55 @@ using System.Globalization;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WebFormsTrainingSecondTask.Core.Entities;
-using WebFormsTrainingSecondTask.Core.Entities.Tasks;
-using WebFormsTrainingSecondTask.DataAccessService;
+using WebFormsTrainingSecondTask.Mappers;
+using WebFormsTrainingSecondTask.Models.Category;
 using WebFormsTrainingSecondTask.Models.Enums;
+using WebFormsTrainingSecondTask.Models.Task;
+using WebFormsTrainingSecondTask.Services.Contracts;
+using WebFormsTrainingSecondTask.Services.DTOModels;
 
 namespace WebFormsTrainingSecondTask
 {
     public partial class _Default : Page
     {
-        private static Guid task_id;
-        private static List<Category> categories;
-        private static List<Task> tasks;
+        protected ICategoryService _categoryService { get; }
+        protected ITaskService _taskService { get; }
+
+        private static List<CategoryModel> categories;
+        private static TaskModel currentTask;
+
+        public _Default(ICategoryService categoryService, ITaskService taskService)
+        {
+            _categoryService = categoryService;
+            _taskService = taskService;
+            var categoriesDTO = _categoryService.GetAllIncluded();
+            categories = categoriesDTO.ToModel();
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            tasks = UnitOfWorkService.Instance.TaskRepository.GetTasks().ToList();
-            categories = UnitOfWorkService.Instance.CategoryRepository.All().ToList();
-
-            PopulateTasksByCategory(tasks, categories);
+            PopulateTasksByCategory(categories);
         }
 
-        private void PopulateTasksByCategory(List<Task> tasks, List<Category> categories)
+
+        private void PopulateTasksByCategory(List<CategoryModel> categories)
         {
             foreach (var item in categories)
             {
-                var tasksByCategory = tasks.Where(x => x.Category.Name == item.Name).ToList();
-               
-                switch (item.Name.ToString())
+                switch (item.Name)
                 {
-                    //Should be modified where if we have more categories in future
-                    //to automatically generate 
                     case nameof(CategoryEnum.HIGH):
-                        GridViewHigh.DataSource = tasksByCategory;
+                        GridViewHigh.DataSource = categories.FirstOrDefault(x => x.Name == item.Name).Tasks;
                         GridViewHigh.DataBind();
                         break;
 
                     case nameof(CategoryEnum.MEDIUM):
-                        GridViewMedium.DataSource = tasksByCategory;
+                        GridViewMedium.DataSource = categories.FirstOrDefault(x => x.Name == item.Name).Tasks;
                         GridViewMedium.DataBind();
                         break;
 
                     case nameof(CategoryEnum.LOW):
-                        GridViewLow.DataSource = tasksByCategory;
+                        GridViewLow.DataSource = categories.FirstOrDefault(x => x.Name == item.Name).Tasks;
                         GridViewLow.DataBind();
                         break;
                 }
@@ -57,14 +63,25 @@ namespace WebFormsTrainingSecondTask
         protected void gv_SelectedIndexChanged(object sender, EventArgs e)
         {
             var gridViewSender = sender as GridView;
+
             RemoveSelectedRow();
 
-            task_id = Guid.Parse(gridViewSender.SelectedRow.Cells[4].Text.ToString());
-            taskName.Text = gridViewSender.SelectedRow.Cells[3].Text.ToString();
+            SetSelectedTask(gridViewSender);
+
             txtCategory.Text = gridViewSender.SelectedRow.Cells[1].Text.ToString();
-            txtdob.Text = FormatDate(gridViewSender.SelectedRow.Cells[2].Text.ToString().Split()[0]);
+            txtdob.Text = FormatDate(gridViewSender.SelectedRow.Cells[3].Text.ToString().Split()[0]);
+            taskName.Text = gridViewSender.SelectedRow.Cells[2].Text.ToString();
 
             gridViewSender.SelectedRowStyle.BackColor = Color.Red;
+        }
+
+        private void SetSelectedTask(GridView gridViewSender)
+        {
+            var selectedTaskCategoryId = Guid.Parse(gridViewSender.SelectedRow.Cells[4].Text.ToString());
+            var selectedTaskId = Guid.Parse(gridViewSender.SelectedRow.Cells[1].Text.ToString());
+
+            currentTask = categories.FirstOrDefault(c => c.Id == selectedTaskCategoryId)
+                          .Tasks.FirstOrDefault(t => t.Id == selectedTaskId);
         }
 
         private void RemoveSelectedRow()
@@ -76,33 +93,39 @@ namespace WebFormsTrainingSecondTask
 
         protected void btnsave_Click(object sender, EventArgs e)
         {
-            var category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
+            var categoryDTO = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).ToDto();
 
-            UnitOfWorkService.Instance.TaskRepository.Add(
-                new Task
-                {
-                    Id = Guid.NewGuid(),
-                    Name = taskName.Text,
-                    Date = Convert.ToDateTime(txtdob.Text),
-                    Category = category,
-                });
+            try
+            {
 
-            UnitOfWorkService.Instance.Commit();
+                _taskService.Add(
+                    new TaskDTO
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = taskName.Text,
+                        Date = Convert.ToDateTime(txtdob.Text),
+                        Category = categoryDTO,
+                    });
 
-            CleanAllFields();
+                CleanAllFields();
 
-            RefreshPage();
+                RefreshPage();
+            }
+            catch (Exception exc)
+            {
+                ValidationMessageLabel.Text = exc.Message;
+                ValidationMessageLabel.Visible = true;
+                ValidationMessageLabel.ForeColor = Color.Red;
+            }
         }
 
         protected void btnupdate_Click(object sender, EventArgs e)
         {
-            var task = tasks.FirstOrDefault(c => c.Id == task_id);
+            currentTask.Name = taskName.Text;
+            currentTask.Date = Convert.ToDateTime(txtdob.Text);
+            currentTask.Category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
 
-            task.Name = taskName.Text;
-            task.Date = Convert.ToDateTime(txtdob.Text);
-            task.Category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
-
-            UnitOfWorkService.Instance.Commit();
+            _taskService.Update(currentTask.ToDto());
 
             CleanAllFields();
 
@@ -111,10 +134,7 @@ namespace WebFormsTrainingSecondTask
 
         protected void btndlt_Click(object sender, EventArgs e)
         {
-            var task = tasks.FirstOrDefault(c => c.Id == task_id);
-
-            UnitOfWorkService.Instance.TaskRepository.Remove(task);
-            UnitOfWorkService.Instance.Commit();
+            _taskService.Delete(currentTask.Id);
 
             CleanAllFields();
 

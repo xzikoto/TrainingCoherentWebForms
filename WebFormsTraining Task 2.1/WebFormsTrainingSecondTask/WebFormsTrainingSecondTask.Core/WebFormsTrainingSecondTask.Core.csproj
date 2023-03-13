@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebFormsTrainingSecondTask.Core</RootNamespace>
     <AssemblyName>WebFormsTrainingSecondTask.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -189,8 +190,8 @@
     <Compile Include="IRepository2.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasks\ICategoryRepository.cs" />
-    <Compile Include="Tasks\ITasksRepository.cs" />
+    <Compile Include="Repository Contracts\ICategoryRepository.cs" />
+    <Compile Include="Repository Contracts\ITasksRepository.cs" />
     <Compile Include="VisibleEntity.cs" />
   </ItemGroup>
   <ItemGroup>

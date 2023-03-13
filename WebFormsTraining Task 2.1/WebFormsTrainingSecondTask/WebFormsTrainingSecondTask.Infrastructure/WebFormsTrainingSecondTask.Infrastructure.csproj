@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebFormsTrainingSecondTask.Infrastructure</RootNamespace>
     <AssemblyName>WebFormsTrainingSecondTask.Infrastructure</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,9 +84,9 @@
     <Compile Include="AppContext.cs" />
     <Compile Include="Configs\TaskConfig.cs" />
     <Compile Include="Helpers\SqlExceptionHelper.cs" />
-    <Compile Include="Migrations\202303101408410_Initial.cs" />
-    <Compile Include="Migrations\202303101408410_Initial.designer.cs">
-      <DependentUpon>202303101408410_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202303130849357_Initial.cs" />
+    <Compile Include="Migrations\202303130849357_Initial.designer.cs">
+      <DependentUpon>202303130849357_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Repository2.cs" />
     <Compile Include="Seeder\Seeder.cs" />
     <Compile Include="UnitOfWork.cs" />
-    <Compile Include="UnitOfWorkOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -112,8 +112,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202303101408410_Initial.resx">
-      <DependentUpon>202303101408410_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202303130849357_Initial.resx">
+      <DependentUpon>202303130849357_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,19 +1,16 @@
 ﻿namespace WebFormsTrainingSecondTask.Infrastructure.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
     using WebFormsTrainingSecondTask.Core.Entities.Tasks;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WebFormsTrainingSecondTask.Infrastructure.AppContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AppContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(WebFormsTrainingSecondTask.Infrastructure.AppContext context)
+        protected override void Seed(AppContext context)
         {
             var tasks = Seeder.Seeder.GenerateTasks();
             tasks.ForEach(t => context.Set<Task>().Add(t));

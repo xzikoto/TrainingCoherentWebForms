@@ -17,29 +17,47 @@ namespace WebFormsTrainingSecondTask.Infrastructure
         private TasksRepository _tasksRepository;
         private CategoryRepository _categoriesRepository;
 
-        private AppContext Context => _context == null ? new AppContext() : _context;
+        private AppContext Context
+        {
+            get
+            {
+                if (_context == null)
+                {
+                    return _context = new AppContext();
+                }
+                return _context;
+            }
+        }
 
         #region Catalog
 
-        public ITasksRepository TaskRepository => _tasksRepository == null ? new TasksRepository(Context) : _tasksRepository;
-        
-        public ICategoryRepository CategoryRepository => _categoriesRepository == null ? new CategoryRepository(Context) : _categoriesRepository;
+        public ITasksRepository TaskRepository
+        {
+            get
+            {
+                if (_tasksRepository == null)
+                {
+                    return _tasksRepository = new TasksRepository(Context);
+                }
+
+                return _tasksRepository;
+            }
+        }
+
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                if (_categoriesRepository == null)
+                {
+                    return _categoriesRepository = new CategoryRepository(Context);
+                }
+
+                return _categoriesRepository;
+            }
+        }
 
         #endregion
-
-        public UnitOfWork(IOptions<UnitOfWorkOptions> accessor) : this(accessor.Value)
-        {
-        }
-
-        public UnitOfWork(UnitOfWorkOptions options)
-        {
-            options.ConnectionString = @"Data Source=BG-NBW-0263\MSSQLSERVER01;Initial Catalog=TasksDB;Integrated Security=True";
-            options.CommandTimeout = 200;
-        }
-
-        public UnitOfWork()
-        {
-        }
 
         public void Commit()
         {
