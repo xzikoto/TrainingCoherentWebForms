@@ -1,47 +1,26 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using WebFormsTrainingSecondTask.Infrastructure.Core;
 using WebFormsTrainingSecondTask.Services.Contracts;
-using WebFormsTrainingSecondTask.Services.DTOModels;
+using WebFormsTrainingSecondTask.Services.DTOModels.CategoryDTOs;
 using WebFormsTrainingSecondTask.Services.Mappers;
 
 namespace WebFormsTrainingSecondTask.Services
 {
-    public class TaskService : ITaskService
+    public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public TaskService(IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(TaskDTO taskDTO)
+        public IEnumerable<CategoryDTO> GetAllIncluded()
         {
-            var task = TaskMapper.ToDomain(taskDTO);
+            var result = _unitOfWork.CategoryRepository.GetAllIncluded();
 
-            _unitOfWork.TaskRepository.Add(task);
-            _unitOfWork.Commit();
-        }
-        
-        public void Update(TaskDTO taskDTO)
-        {
-            var taskOld = _unitOfWork.TaskRepository.Find(t => t.Id == taskDTO.Id);
-            var taskNew = taskDTO.ToDomain();
-
-            taskOld.Name = taskNew.Name;
-            taskNew.Date = taskOld.Date;
-            taskNew.CategoryId = taskOld.CategoryId;
-            taskNew.Category = taskOld.Category;
-
-            _unitOfWork.Commit();
+            return result.ToDto();
         }
 
-        public void Delete(Guid id)
-        {
-            var task = _unitOfWork.TaskRepository.Find(t => t.Id == id);
-            
-            _unitOfWork.TaskRepository.Remove(task);
-            _unitOfWork.Commit();
-        }
     }
 }

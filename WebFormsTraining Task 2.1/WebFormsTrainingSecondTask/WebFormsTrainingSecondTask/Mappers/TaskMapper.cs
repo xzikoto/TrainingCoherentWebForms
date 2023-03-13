@@ -20,6 +20,7 @@ namespace WebFormsTrainingSecondTask.Mappers
             {
                 Id = task.Id,
                 CategoryId = task.CategoryId,
+                Category = task.Category.ToModel(),
                 Date = task.Date,
                 Name = task.Name
             };
@@ -27,7 +28,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<TaskModel> ToModel(this List<TaskDTO> tasks)
         {
-            if (!tasks.Any())
+            if (tasks == null || !tasks.Any())
             {
                 return new List<TaskModel>();
             }
@@ -46,6 +47,7 @@ namespace WebFormsTrainingSecondTask.Mappers
             {
                 Id = task.Id,
                 CategoryId = task.CategoryId,
+                Category = task.Category.ToDto(),
                 Date = task.Date,
                 Name = task.Name
             };
@@ -53,7 +55,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<TaskDTO> ToDto(this List<TaskModel> tasks)
         {
-            if (!tasks.Any())
+            if (tasks == null || !tasks.Any())
             {
                 return new List<TaskDTO>();
             }

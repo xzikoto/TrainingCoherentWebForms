@@ -26,6 +26,7 @@ namespace WebFormsTrainingSecondTask
         {
             _categoryService = categoryService;
             _taskService = taskService;
+
             var categoriesDTO = _categoryService.GetAllIncluded();
             categories = categoriesDTO.ToModel();
         }
@@ -34,7 +35,6 @@ namespace WebFormsTrainingSecondTask
         {
             PopulateTasksByCategory(categories);
         }
-
 
         private void PopulateTasksByCategory(List<CategoryModel> categories)
         {
@@ -62,13 +62,14 @@ namespace WebFormsTrainingSecondTask
 
         protected void gv_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ValidationMessageLabel.Visible = false;
+
             var gridViewSender = sender as GridView;
 
             RemoveSelectedRow();
-
             SetSelectedTask(gridViewSender);
 
-            txtCategory.Text = gridViewSender.SelectedRow.Cells[1].Text.ToString();
+            txtCategory.Text = categories.FirstOrDefault(c => c.Id == currentTask.CategoryId).Name;
             txtdob.Text = FormatDate(gridViewSender.SelectedRow.Cells[3].Text.ToString().Split()[0]);
             taskName.Text = gridViewSender.SelectedRow.Cells[2].Text.ToString();
 
@@ -94,20 +95,17 @@ namespace WebFormsTrainingSecondTask
         protected void btnsave_Click(object sender, EventArgs e)
         {
             var categoryDTO = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).ToDto();
-
+            
             try
             {
-
                 _taskService.Add(
                     new TaskDTO
                     {
-                        Id = Guid.NewGuid(),
+                        Id = currentTask?.Id == Guid.Empty ? Guid.NewGuid() : currentTask.Id,
                         Name = taskName.Text,
                         Date = Convert.ToDateTime(txtdob.Text),
                         Category = categoryDTO,
                     });
-
-                CleanAllFields();
 
                 RefreshPage();
             }
@@ -116,27 +114,64 @@ namespace WebFormsTrainingSecondTask
                 ValidationMessageLabel.Text = exc.Message;
                 ValidationMessageLabel.Visible = true;
                 ValidationMessageLabel.ForeColor = Color.Red;
+
+                RemoveSelectedRow();
+                CleanAllFields();
+
+                currentTask = null;
             }
         }
 
         protected void btnupdate_Click(object sender, EventArgs e)
         {
+            if (currentTask == null)
+            {
+                currentTask = new TaskModel();
+            }
+
             currentTask.Name = taskName.Text;
             currentTask.Date = Convert.ToDateTime(txtdob.Text);
             currentTask.Category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
+            currentTask.CategoryId = currentTask.Category.Id;
 
-            _taskService.Update(currentTask.ToDto());
+            try
+            {
+                _taskService.Update(currentTask.ToDto());
 
-            CleanAllFields();
+                RefreshPage();
+            }
+            catch (Exception exc)
+            {
+                ValidationMessageLabel.Text = exc.Message;
+                ValidationMessageLabel.Visible = true;
+                ValidationMessageLabel.ForeColor = Color.Red;
 
-            RefreshPage();
+                RemoveSelectedRow();
+                CleanAllFields();
+
+                currentTask = null;
+            }
         }
 
         protected void btndlt_Click(object sender, EventArgs e)
         {
-            _taskService.Delete(currentTask.Id);
+            if (currentTask == null)
+            {
+                currentTask = new TaskModel();
 
-            CleanAllFields();
+                ValidationMessageLabel.Text = "Can not delete not existing task";
+
+                return;
+            }
+
+            try
+            {
+                _taskService.Delete(currentTask.Id);
+            }
+            catch (Exception exc)
+            {
+                ValidationMessageLabel.Text = exc.Message;
+            }
 
             RefreshPage();
         }

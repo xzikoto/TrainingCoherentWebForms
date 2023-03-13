@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebFormsTrainingSecondTask.Core.Entities.Tasks;
 using WebFormsTrainingSecondTask.Services.DTOModels;
@@ -43,7 +44,8 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
             return new Task
             {
                 Id = task.Id,
-                CategoryId = task.CategoryId,
+                CategoryId = task.CategoryId == Guid.Empty ? task.Category.Id : Guid.Empty,
+                Category = task.Category.ToDomain(),
                 Date = task.Date,
                 Name = task.Name
             };

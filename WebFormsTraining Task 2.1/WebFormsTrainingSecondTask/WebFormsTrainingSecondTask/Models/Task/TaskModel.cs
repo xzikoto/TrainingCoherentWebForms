@@ -1,6 +1,5 @@
 ﻿using System;
 using WebFormsTrainingSecondTask.Models.Category;
-using WebFormsTrainingSecondTask.Services.DTOModels.CategoryDTOs;
 
 namespace WebFormsTrainingSecondTask.Models.Task
 {

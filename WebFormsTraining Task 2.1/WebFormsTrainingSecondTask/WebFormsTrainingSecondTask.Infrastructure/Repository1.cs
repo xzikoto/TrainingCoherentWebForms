@@ -92,10 +92,6 @@ namespace WebFormsTrainingSecondTask.Infrastructure
         {
             Check.ArgumentNotNull(entity, nameof(entity));
 
-            if (!DbSet.Local.Contains(entity))
-            {
-                DbSet.Attach(entity);
-            }
             DbSet.Remove(entity);
         }
 

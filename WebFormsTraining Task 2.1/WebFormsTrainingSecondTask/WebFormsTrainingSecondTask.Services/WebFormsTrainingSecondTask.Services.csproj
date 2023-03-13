@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\ITaskService.cs" />
-    <Compile Include="TaskService.cs" />
+    <Compile Include="Exceptions\EntityExistException.cs" />
     <Compile Include="CategoryService.cs" />
+    <Compile Include="TaskService.cs" />
     <Compile Include="Contracts\ICategoryService.cs" />
     <Compile Include="DTOModels\CategoryDTOs\CategoryDTO.cs" />
     <Compile Include="DTOModels\TaskDTOs\TaskDTO.cs" />
