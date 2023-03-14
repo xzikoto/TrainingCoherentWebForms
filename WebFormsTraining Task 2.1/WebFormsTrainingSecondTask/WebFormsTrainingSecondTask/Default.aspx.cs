@@ -16,8 +16,8 @@ namespace WebFormsTrainingSecondTask
 {
     public partial class _Default : Page
     {
-        protected ICategoryService _categoryService { get; }
-        protected ITaskService _taskService { get; }
+        protected readonly ICategoryService _categoryService;
+        protected readonly ITaskService _taskService;
 
         private static List<CategoryModel> categories;
         private static TaskModel currentTask;
@@ -67,6 +67,7 @@ namespace WebFormsTrainingSecondTask
             var gridViewSender = sender as GridView;
 
             RemoveSelectedRow();
+            RefreshButtonStates();
             SetSelectedTask(gridViewSender);
 
             txtCategory.Text = categories.FirstOrDefault(c => c.Id == currentTask.CategoryId).Name;
@@ -94,12 +95,18 @@ namespace WebFormsTrainingSecondTask
 
         protected void btnsave_Click(object sender, EventArgs e)
         {
+            if (btndlt.Enabled == false)
+            {
+                DeleteTask(); 
+                return;
+            }
+
             var categoryDTO = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).ToDto();
             var isTaskIdNotExist = currentTask == null || currentTask.Id == Guid.Empty;
 
             var taskDTO = new TaskDTO
             {
-                Name = taskName.Text,
+                Name = taskName.Text, 
                 Date = Convert.ToDateTime(txtdob.Text),
                 CategoryId = categoryDTO.Id,
             };
@@ -127,6 +134,7 @@ namespace WebFormsTrainingSecondTask
 
                 RemoveSelectedRow();
                 CleanAllFields();
+                RefreshButtonStates();
 
                 currentTask = null;
             }
@@ -134,6 +142,14 @@ namespace WebFormsTrainingSecondTask
 
         protected void btndlt_Click(object sender, EventArgs e)
         {
+            DisableInputFields();
+            DisableButton(btndlt, Color.DarkRed);
+        }
+
+        private void DeleteTask()
+        {
+            btndlt.BackColor = Color.DarkRed;
+
             if (currentTask == null)
             {
                 currentTask = new TaskModel();
@@ -151,8 +167,28 @@ namespace WebFormsTrainingSecondTask
             {
                 ValidationMessageLabel.Text = exc.Message;
             }
-
+            
             RefreshPage();
+        }
+        private void RefreshButtonStates()
+        {
+            btndlt.Enabled = true;
+            btnsave.Enabled = true;
+
+            btndlt.BackColor = Color.Red;
+        }
+
+        private void DisableButton(Button button, Color backColor)
+        {
+            button.Enabled = false;
+            btndlt.BackColor = backColor;
+        }
+        
+        private void DisableInputFields()
+        {
+            this.txtdob.Enabled = false;
+            this.taskName.Enabled = false;
+            this.txtCategory.Enabled = false;
         }
 
         private void RefreshPage()
