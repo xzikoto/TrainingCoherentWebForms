@@ -170,6 +170,7 @@ namespace WebFormsTrainingSecondTask
             
             RefreshPage();
         }
+
         private void RefreshButtonStates()
         {
             btndlt.Enabled = true;
