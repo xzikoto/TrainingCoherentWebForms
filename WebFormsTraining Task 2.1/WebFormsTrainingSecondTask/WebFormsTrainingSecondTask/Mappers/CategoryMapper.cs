@@ -24,7 +24,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<CategoryModel> ToModel(this IEnumerable<CategoryDTO> categories)
         {
-            if (categories == null || !categories.Any())
+            if (categories == null)
             {
                 return new List<CategoryModel>();
             }
@@ -49,7 +49,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<CategoryDTO> ToDto(this IEnumerable<CategoryModel> categories)
         {
-            if (categories == null || !categories.Any())
+            if (categories == null)
             {
                 return new List<CategoryDTO>();
             }

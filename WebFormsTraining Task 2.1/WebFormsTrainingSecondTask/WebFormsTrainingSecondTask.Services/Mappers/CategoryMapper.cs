@@ -26,7 +26,7 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
         {
             if (categories == null) 
             {
-                return null;
+                return new List<CategoryDTO>();
             }
 
             return categories.Select(c => ToDto(c)).ToList();
@@ -51,7 +51,7 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
         {
             if (categories == null) 
             {
-                return null;
+                new List<Category>();
             }
 
             return categories.Select(c => ToDomain(c)).ToList();

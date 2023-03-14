@@ -15,12 +15,8 @@ namespace WebFormsTrainingSecondTask
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // Circular reference issue should be fixed
-            // Mappers also, because of this
             // Better connection string providing for AppContext
             // Better validation in Services 
-            // Awlful managing of DTOs and Models - copy pasted from Core-entities - fix that
-            // Lot of hardcoded strings about exceptions handling could be moved to some class with constants about common situation/not found/bad etc..
             var builder = new ContainerBuilder();
             
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();

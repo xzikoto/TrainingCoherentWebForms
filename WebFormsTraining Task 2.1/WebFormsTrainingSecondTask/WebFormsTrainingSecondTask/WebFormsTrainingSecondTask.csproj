@@ -171,9 +171,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="DbScripts\DeploymentScript.sql" />
-    <Content Include="DbScripts\DatabaseScript\CreateTasksDatabase.sql" />
-    <Content Include="DbScripts\TablesScripts\CreateTasksTable.sql" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

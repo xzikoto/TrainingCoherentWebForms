@@ -131,8 +131,7 @@ namespace WebFormsTrainingSecondTask
 
             currentTask.Name = taskName.Text;
             currentTask.Date = Convert.ToDateTime(txtdob.Text);
-            currentTask.Category = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower());
-            currentTask.CategoryId = currentTask.Category.Id;
+            currentTask.CategoryId = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).Id;
 
             try
             {

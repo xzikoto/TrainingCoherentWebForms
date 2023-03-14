@@ -28,7 +28,7 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
         {
             if (tasks == null)
             {
-                return null;
+                return new List<TaskDTO>();
             }
 
             return tasks.Select(t => ToDto(t)).ToList();
@@ -44,8 +44,7 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
             return new Task
             {
                 Id = task.Id,
-                CategoryId = task.CategoryId == Guid.Empty ? task.Category.Id : Guid.Empty,
-                Category = task.Category.ToDomain(),
+                CategoryId = task.CategoryId,
                 Date = task.Date,
                 Name = task.Name
             };
@@ -55,7 +54,7 @@ namespace WebFormsTrainingSecondTask.Services.Mappers
         {
             if (tasks == null)
             {
-                return null;
+               new List<Task>();
             }
 
             return tasks.Select(t => ToDomain(t)).ToList();

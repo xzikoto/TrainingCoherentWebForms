@@ -9,6 +9,5 @@ namespace WebFormsTrainingSecondTask.Models.Task
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public Guid CategoryId { get; set; }
-        public CategoryModel Category { get; set; }
     }
 }

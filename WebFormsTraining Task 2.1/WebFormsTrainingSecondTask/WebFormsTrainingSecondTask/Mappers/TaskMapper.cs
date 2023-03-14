@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using WebFormsTrainingSecondTask.Models.Task;
 using WebFormsTrainingSecondTask.Services.DTOModels;
 
@@ -20,7 +18,6 @@ namespace WebFormsTrainingSecondTask.Mappers
             {
                 Id = task.Id,
                 CategoryId = task.CategoryId,
-                Category = task.Category.ToModel(),
                 Date = task.Date,
                 Name = task.Name
             };
@@ -28,7 +25,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<TaskModel> ToModel(this List<TaskDTO> tasks)
         {
-            if (tasks == null || !tasks.Any())
+            if (tasks == null)
             {
                 return new List<TaskModel>();
             }
@@ -47,7 +44,6 @@ namespace WebFormsTrainingSecondTask.Mappers
             {
                 Id = task.Id,
                 CategoryId = task.CategoryId,
-                Category = task.Category.ToDto(),
                 Date = task.Date,
                 Name = task.Name
             };
@@ -55,7 +51,7 @@ namespace WebFormsTrainingSecondTask.Mappers
 
         public static List<TaskDTO> ToDto(this List<TaskModel> tasks)
         {
-            if (tasks == null || !tasks.Any())
+            if (tasks == null)
             {
                 return new List<TaskDTO>();
             }
