@@ -4,7 +4,7 @@ using System;
 namespace WebFormsTrainingSecondTask.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class CategoryServiceTests
     {
         [TestMethod]
         public void TestMethod1()

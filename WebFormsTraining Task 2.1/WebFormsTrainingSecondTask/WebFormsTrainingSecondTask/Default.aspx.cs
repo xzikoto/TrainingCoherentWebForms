@@ -95,47 +95,27 @@ namespace WebFormsTrainingSecondTask
         protected void btnsave_Click(object sender, EventArgs e)
         {
             var categoryDTO = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).ToDto();
-            
-            try
+            var isTaskIdNotExist = currentTask == null || currentTask.Id == Guid.Empty;
+
+            var taskDTO = new TaskDTO
             {
-                _taskService.Add(
-                    new TaskDTO
-                    {
-                        Id = currentTask?.Id == Guid.Empty ? Guid.NewGuid() : currentTask.Id,
-                        Name = taskName.Text,
-                        Date = Convert.ToDateTime(txtdob.Text),
-                        Category = categoryDTO,
-                    });
-
-                RefreshPage();
-            }
-            catch (Exception exc)
-            {
-                ValidationMessageLabel.Text = exc.Message;
-                ValidationMessageLabel.Visible = true;
-                ValidationMessageLabel.ForeColor = Color.Red;
-
-                RemoveSelectedRow();
-                CleanAllFields();
-
-                currentTask = null;
-            }
-        }
-
-        protected void btnupdate_Click(object sender, EventArgs e)
-        {
-            if (currentTask == null)
-            {
-                currentTask = new TaskModel();
-            }
-
-            currentTask.Name = taskName.Text;
-            currentTask.Date = Convert.ToDateTime(txtdob.Text);
-            currentTask.CategoryId = categories.FirstOrDefault(c => c.Name.ToLower() == txtCategory.Text.ToLower()).Id;
+                Name = taskName.Text,
+                Date = Convert.ToDateTime(txtdob.Text),
+                CategoryId = categoryDTO.Id,
+            };
 
             try
             {
-                _taskService.Update(currentTask.ToDto());
+                if (isTaskIdNotExist)
+                {
+                    taskDTO.Id = Guid.NewGuid();
+                    _taskService.Add(taskDTO);
+                }
+                else
+                {
+                    taskDTO.Id = currentTask.Id;
+                    _taskService.Update(taskDTO);
+                }
 
                 RefreshPage();
             }

@@ -19,7 +19,6 @@
                                     <div class="form-group">
                                         <asp:Label runat="server" AssociatedControlID="taskName"><b>Task Name</b></asp:Label><br />
                                         <asp:TextBox runat="server" required="required" Enabled="True" name="BrandName" ID="taskName" class="form-control input-sm" placeholder="Task Name"></asp:TextBox>
-
                                     </div>
                                 </div>
                                  <div class="col-md-4 col-md-offset-1">
@@ -47,7 +46,6 @@
                                 <div class="col-md-10 col-md-offset-1">
                                     <div class="form-group">
                                         <asp:Button Text="Save" ID="btnsave" OnClick="btnsave_Click" CssClass="btn btn-primary btn-lg" Width="220px" runat="server" />
-                                        <asp:Button Text="Update" ID="btnupdate" OnClick="btnupdate_Click" CssClass="btn btn-primary btn-lg" Width="220px" runat="server" />
                                         <asp:Button Text="Delete" ID="btndlt" OnClick="btndlt_Click" CssClass="btn btn-danger btn-lg" Width="220px" runat="server" />
                                         <asp:Label Text="" ForeColor="Green" Font-Bold="true" ID="lblmessage" CssClass="label label-success" runat="server" />
                                     </div>

@@ -18,7 +18,6 @@ namespace WebFormsTrainingSecondTask.Services
         public void Add(TaskDTO taskDTO)
         {
             var task = TaskMapper.ToDomain(taskDTO);
-
             if (_unitOfWork.TaskRepository.GetTaskById(taskDTO.Id) != null)
             {
                 throw new Exception("This task already exists");
@@ -48,7 +47,8 @@ namespace WebFormsTrainingSecondTask.Services
 
             task.Name = taskNew.Name;
             task.Date = taskNew.Date;
-            task.CategoryId = taskNew.CategoryId == Guid.Empty ? taskNew.Category.Id : taskNew.CategoryId;
+            //fix this
+            task.CategoryId = taskNew.CategoryId == Guid.Empty ? task.CategoryId : taskNew.Category.Id;
 
             try
             {
